@@ -2,9 +2,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
-const mongoose= require("mongoose");
+const mongoose = require("mongoose");
+const { response } = require("express");
 
-mo
+mongoose.connect("mongodb://localhost:27017/blogDB", { useNewUrlParser: true });
+
+const postSchema = {
+  title: String,
+  content: String,
+};
+const Post = mongoose.model("post", postSchema);
 
 const homeStartingContent =
   " Welcome to my home blog! to add your blog just add the + /compose . Enjoy creating blogs Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
@@ -20,13 +27,16 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
-let posts = [];
+// let posts = [];
 app.get("/", function (req, res) {
-  res.render("home", {
-    homeStartingContent: homeStartingContent,
-    posts: posts,
+  Post.find({}, function (err, foundposts) {
+    res.render("home", {
+      homeStartingContent: homeStartingContent,
+      posts: foundposts,
+    });
   });
-  console.log(posts);
+
+  // console.log(posts);
 });
 app.get("/about", function (req, res) {
   res.render("about", { aboutContent: aboutContent });
@@ -38,12 +48,17 @@ app.get("/compose", function (req, res) {
   res.render("compose");
 });
 app.post("/compose", function (req, res) {
-  const post = {
+  const post = new Post({
     title: req.body.posttitle,
-    message: req.body.postmessage,
-  };
-  posts.push(post);
-  res.redirect("/");
+    content: req.body.postmessage,
+  });
+  post.save(function (err) {
+    if (!err) {
+      res.redirect("/");
+    }
+  });
+  // posts.push(post);
+
   // let input = req.body.posttitle;
   // let m = req.body.postmessage;
 });

@@ -63,20 +63,18 @@ app.post("/compose", function (req, res) {
   // let m = req.body.postmessage;
 });
 app.get("/posts/:postId", function (req, res) {
-  const requestedPostId = _.lowerCase(req.params.postId);
+  const requestedPostId = req.params.postId;
 
   Post.findOne({ _id: requestedPostId }, function (err, foundpost) {
     if (err) {
-  
-        console.log("oops! error 404");
-      } else {
-        res.render("post", {
-          title: foundpost.title,
-          content: foundpost.content,
-        });
-      }
+      console.log(err);
+    } else {
+      res.render("post", {
+        title: foundpost.title,
+        content: foundpost.content,
+      });
     }
-  );
+  });
   // posts.forEach(function (post) {
   //   const storedTitle = _.lowerCase(post.title);
   //   if (storedTitle === requestTitle) {

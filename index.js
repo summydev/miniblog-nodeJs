@@ -36,7 +36,7 @@ app.get("/", function (req, res) {
     });
   });
 
-  // console.log(posts);
+ s
 });
 app.get("/about", function (req, res) {
   res.render("about", { aboutContent: aboutContent });

@@ -35,8 +35,6 @@ app.get("/", function (req, res) {
       posts: foundposts,
     });
   });
-
- s
 });
 app.get("/about", function (req, res) {
   res.render("about", { aboutContent: aboutContent });
@@ -75,7 +73,6 @@ app.get("/posts/:postId", function (req, res) {
       });
     }
   });
- 
 });
 
 app.listen(3000, function () {

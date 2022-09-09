@@ -75,19 +75,7 @@ app.get("/posts/:postId", function (req, res) {
       });
     }
   });
-  // posts.forEach(function (post) {
-  //   const storedTitle = _.lowerCase(post.title);
-  //   if (storedTitle === requestTitle) {
-  //     console.log("matching");
-  //     res.render("post", {
-  //       title: post.title,
-  //       message: post.message,
-  //     });
-  //   } else {
-  //     console.log("Oops! Error 404 :crying");
-  //   }
-  // });
-  // console.log(req.params.postName);
+ 
 });
 
 app.listen(3000, function () {

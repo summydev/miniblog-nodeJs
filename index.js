@@ -55,10 +55,7 @@ app.post("/compose", function (req, res) {
       res.redirect("/");
     }
   });
-  // posts.push(post);
-
-  // let input = req.body.posttitle;
-  // let m = req.body.postmessage;
+  
 });
 app.get("/posts/:postId", function (req, res) {
   const requestedPostId = req.params.postId;
